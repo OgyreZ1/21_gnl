@@ -6,7 +6,7 @@
 /*   By: yironmak <yironmak@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:08:51 by yironmak          #+#    #+#             */
-/*   Updated: 2021/10/16 15:56:51 by yironmak         ###   ########.fr       */
+/*   Updated: 2021/10/16 17:07:01 by yironmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,8 @@ static int	get_bytes_read(char *buf, int fd)
 		return (read(fd, buf, BUFFER_SIZE));
 }
 
-static char	*check_buf(char *buf, char **line)
+static char	*clear_buf(char *buf, char **line)
 {
-	if (ft_strlen(*line) != 0)
-	{
-		buf[0] = '\0';
-		return (*line);
-	}
-	*line = ft_strjoin(*line, buf);
 	buf[0] = '\0';
 	return (*line);
 }
@@ -58,7 +52,7 @@ static char	*t_get_next_line(char *buf, char *line, int fd)
 		line = ft_strjoin(line, buf);
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
-	return (check_buf(buf, &line));
+	return (clear_buf(buf, &line));
 }
 
 char	*get_next_line(int fd)
@@ -66,9 +60,13 @@ char	*get_next_line(int fd)
 	static char	buf[BUFFER_SIZE + 1];
 	char		*line;
 
+	if (BUFFER_SIZE < 1)
+		return (NULL);
 	if (fd < 0)
 		return (NULL);
 	line = malloc(1);
+	if (line == NULL)
+		return (NULL);
 	line[0] = '\0';
 	return (t_get_next_line(buf, line, fd));
 }
