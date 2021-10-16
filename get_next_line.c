@@ -6,13 +6,13 @@
 /*   By: yironmak <yironmak@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:08:51 by yironmak          #+#    #+#             */
-/*   Updated: 2021/10/15 17:08:09 by yironmak         ###   ########.fr       */
+/*   Updated: 2021/10/16 15:56:51 by yironmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	get_bytes_read(char *buf, int fd)
+static int	get_bytes_read(char *buf, int fd)
 {
 	if (ft_strlen(buf))
 		return (ft_strlen(buf));
@@ -20,7 +20,7 @@ int	get_bytes_read(char *buf, int fd)
 		return (read(fd, buf, BUFFER_SIZE));
 }
 
-char	*check_buf(char *buf, char **line)
+static char	*check_buf(char *buf, char **line)
 {
 	if (ft_strlen(*line) != 0)
 	{
@@ -32,7 +32,7 @@ char	*check_buf(char *buf, char **line)
 	return (*line);
 }
 
-char	*t_get_next_line(char *buf, char *line, int fd)
+static char	*t_get_next_line(char *buf, char *line, int fd)
 {
 	int			bytes_read;
 	char		*p_n;
